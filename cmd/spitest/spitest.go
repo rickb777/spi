@@ -6,11 +6,11 @@ import (
 	"log"
 	"strconv"
 
-	"github.com/ecc1/spi"
+	"github.com/rickb777/spi"
 )
 
 var (
-	device   = flag.String("d", "/dev/spidev5.1", "SPI `device`")
+	device   = flag.String("d", "/dev/null", "SPI `device`")
 	speed    = flag.Int("s", 1000000, "SPI `speed` (Hz)")
 	customCS = flag.Int("cs", 0, "use `GPIO#` as custom chip select")
 )
@@ -25,19 +25,23 @@ func main() {
 		}
 		values = append(values, byte(b))
 	}
+
 	dev, err := spi.Open(*device, *speed, *customCS)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer dev.Close()
+
 	if len(values)%2 == 1 {
 		values = append(values, 0)
 	}
+
 	response := make([]byte, len(values))
 	fmt.Printf("send: % X\n", values)
 	err = dev.Transfer(values, response)
 	if err != nil {
 		log.Fatalf("%s: %v", *device, err)
 	}
+
 	fmt.Printf("recv: % X\n", response)
 }

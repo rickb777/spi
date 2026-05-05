@@ -1,8 +1,8 @@
-module github.com/ecc1/spi
+module github.com/rickb777/spi
 
-go 1.13
+go 1.25.0
 
 require (
-	github.com/ecc1/gpio v0.0.0-20200212231225-d40e43fcf8f5
-	golang.org/x/sys v0.5.0
+	github.com/rickb777/gpio v0.0.1
+	golang.org/x/sys v0.43.0
 )

@@ -15,7 +15,7 @@ type spi_ioc_transfer struct {
 	cs_change     uint8
 	tx_nbits      uint8
 	rx_nbits      uint8
-	pad           uint16
+	pad           uint16 // includes unused word_delay_usecs uint8
 }
 
 // Not all of these are used, but are defined for completeness.

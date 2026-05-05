@@ -1,10 +1,13 @@
+// Package spi provides access to SPI devices via ioctl syscalls.
+// This is more complex than using sysfs and provides transfer of
+// sequences of bytes.
 package spi
 
 import (
 	"fmt"
 	"unsafe"
 
-	"github.com/ecc1/gpio"
+	"github.com/rickb777/gpio"
 	"golang.org/x/sys/unix"
 )
 
@@ -16,13 +19,14 @@ type Device struct {
 }
 
 // Open opens the given SPI device at the specified speed (in Hertz)
-// If customCS in not zero, that pin number is used as a custom chip-select.
+// If customCS is not zero, that pin number is used as a custom chip-select.
 func Open(spiDevice string, speed int, customCS int) (*Device, error) {
 	fd, err := unix.Open(spiDevice, unix.O_RDWR, 0)
 	if err != nil {
 		return nil, fmt.Errorf("%s: %w", spiDevice, err)
 	}
-	// Ensure exclusive access.
+
+	// Ensure exclusive access, non-blocking
 	err = unix.Flock(fd, unix.LOCK_EX|unix.LOCK_NB)
 	switch err {
 	case nil:
@@ -36,12 +40,14 @@ func Open(spiDevice string, speed int, customCS int) (*Device, error) {
 		_ = unix.Close(fd)
 		return nil, fmt.Errorf("%s: %w", spiDevice, err)
 	}
+
 	// Use specified GPIO pin as custom chip-select.
 	cs, err := gpio.Output(customCS, true, false)
 	if err != nil {
 		_ = unix.Close(fd)
 		return nil, fmt.Errorf("GPIO %d for chip select: %w", customCS, err)
 	}
+
 	return &Device{fd: fd, speed: speed, cs: cs}, nil
 }
 
@@ -55,12 +61,15 @@ func (dev *Device) Transfer(snd, rcv []byte) error {
 	if len(snd) != len(rcv) {
 		return fmt.Errorf("transfer buffers must be the same length (snd = %d, rcv = %d)", len(snd), len(rcv))
 	}
+
 	if dev.cs != nil {
 		dev.cs.Write(true)
 		defer dev.cs.Write(false)
 	}
+
 	sndAddr := uint64(uintptr(unsafe.Pointer(&snd[0])))
 	rcvAddr := uint64(uintptr(unsafe.Pointer(&rcv[0])))
+
 	tr := spi_ioc_transfer{
 		tx_buf:        sndAddr,
 		rx_buf:        rcvAddr,
@@ -69,6 +78,7 @@ func (dev *Device) Transfer(snd, rcv []byte) error {
 		delay_usecs:   0,
 		bits_per_word: 8,
 	}
+
 	return dev.syscall(spi_IOC_MESSAGE(1), unsafe.Pointer(&tr))
 }
 
