@@ -1,12 +1,5 @@
-github.com/ecc1/gpio v0.0.0-20171107174639-450ac9ea6df7 h1:87CukuBNR73j2KmipKlPkTLR1JaxTt0r9HXTDLUclD4=
-github.com/ecc1/gpio v0.0.0-20171107174639-450ac9ea6df7/go.mod h1:LXSJyYdvUHvdCZFUJDqKHv0aRRXrTfZIVlYfBOslPmQ=
-github.com/ecc1/gpio v0.0.0-20200212231225-d40e43fcf8f5 h1:caoskihCyJpXaV3oRLl+jYuE+aLRnfcIprUQ6oBxTh8=
-github.com/ecc1/gpio v0.0.0-20200212231225-d40e43fcf8f5/go.mod h1:ZcIrkf+E8KutUpAcNHOHaf2NYukHYOlYTCDxV5zzn04=
-github.com/rickb777/gpio v0.0.1 h1:IW8bUInG3j/eI2qO1Oq8N8v/pr5ZXAp6tiLYNgvzo58=
 github.com/rickb777/gpio v0.0.1/go.mod h1:KnIQOXkjJal8aABWWWdeG97VauOwffOa7MK1b8CTPpk=
-golang.org/x/sys v0.0.0-20200212091648-12a6c2dcc1e4 h1:sfkvUWPNGwSV+8/fNqctR5lS2AqCSqYwXdrjCxp/dXo=
-golang.org/x/sys v0.0.0-20200212091648-12a6c2dcc1e4/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
-golang.org/x/sys v0.5.0 h1:MUK/U/4lj1t1oPg0HfuXDN/Z1wv31ZJ/YcPiGccS4DU=
-golang.org/x/sys v0.5.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+github.com/rickb777/gpio v0.0.2 h1:bIBQVc5DyD/xoOSASdfgkKvMlfV+A7JQh7EflG4U/R8=
+github.com/rickb777/gpio v0.0.2/go.mod h1:KnIQOXkjJal8aABWWWdeG97VauOwffOa7MK1b8CTPpk=
 golang.org/x/sys v0.43.0 h1:Rlag2XtaFTxp19wS8MXlJwTvoh8ArU6ezoyFsMyCTNI=
 golang.org/x/sys v0.43.0/go.mod h1:4GL1E5IUh+htKOUEOaiffhrAeqysfVGipDYzABqnCmw=
